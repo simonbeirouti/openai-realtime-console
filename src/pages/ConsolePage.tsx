@@ -524,7 +524,7 @@ export function ConsolePage() {
       </div>
       <div className="content-main">
         <div className="content-logs">
-          <div className="content-block events">
+          {/* <div className="content-block events">
             <div className="visualization">
               <div className="visualization-entry client">
                 <canvas ref={clientCanvasRef} />
@@ -597,7 +597,7 @@ export function ConsolePage() {
                 );
               })}
             </div>
-          </div>
+          </div> */}
           <div className="content-block conversation">
             <div className="content-block-title">conversation</div>
             <div className="content-block-body" data-conversation-content>
@@ -652,6 +652,7 @@ export function ConsolePage() {
                         )}
                       {conversationItem.formatted.file && (
                         <audio
+                          style={{ marginTop: '10px' }}
                           src={conversationItem.formatted.file.url}
                           controls
                         />
@@ -662,7 +663,7 @@ export function ConsolePage() {
               })}
             </div>
           </div>
-          <div className="content-actions">
+          <div className="content-actions" style={{ position: 'fixed', bottom: 0, left: 0, right: 0, background: 'var(--background)', borderTop: '1px solid var(--border)', padding: '1rem' }}>
             <Toggle
               defaultValue={false}
               labels={['manual', 'vad']}
@@ -681,7 +682,7 @@ export function ConsolePage() {
             )}
             <div className="spacer" />
             <Button
-              label={isConnected ? 'disconnect' : 'connect'}
+              label={isConnected ? 'end session' : 'start session'}
               iconPosition={isConnected ? 'end' : 'start'}
               icon={isConnected ? X : Zap}
               buttonStyle={isConnected ? 'regular' : 'action'}
@@ -691,7 +692,7 @@ export function ConsolePage() {
             />
           </div>
         </div>
-        <div className="content-right">
+        {/* <div className="content-right">
           <div className="content-block map">
             <div className="content-block-title">get_weather()</div>
             <div className="content-block-title bottom">
@@ -724,7 +725,7 @@ export function ConsolePage() {
               {JSON.stringify(memoryKv, null, 2)}
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

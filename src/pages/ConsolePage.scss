@@ -34,12 +34,13 @@
   }
 
   .content-main {
+    height: 100%;
     flex-grow: 1;
     flex-shrink: 1 !important;
     margin: 0px 16px;
     display: flex;
     overflow: hidden;
-    margin-bottom: 24px;
+    margin-bottom: 80px;
     .content-block {
       position: relative;
       display: flex;
@@ -66,7 +67,6 @@
       }
     }
     .content-right {
-      width: 300px;
       flex-shrink: 0;
       display: flex;
       flex-direction: column;
@@ -138,9 +138,6 @@
         flex-shrink: 0;
         width: 100%;
         overflow: hidden;
-        height: 200px;
-        min-height: 0;
-        max-height: 200px;
         border-top: 1px solid #e7e7e7;
       }
     }
