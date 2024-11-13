@@ -110,7 +110,7 @@ export function ConsolePage() {
     client.sendUserMessageContent([
       {
         type: `input_text`,
-        text: `Habari! Tafadhali ongea Kiswahili.`,
+        text: `Hello! Welcome to Rafiki OS.`,
         
       },
     ]);
@@ -174,13 +174,24 @@ export function ConsolePage() {
    * Auto-scroll the conversation logs
    */
   useEffect(() => {
-    const conversationEls = [].slice.call(
-      document.body.querySelectorAll('[data-conversation-content]')
-    );
-    for (const el of conversationEls) {
-      const conversationEl = el as HTMLDivElement;
+    const scrollToBottom = () => {
+      const conversationEl = document.querySelector('[data-conversation-content]') as HTMLDivElement;
+      if (!conversationEl) return;
+      
+      // Force scroll to bottom
       conversationEl.scrollTop = conversationEl.scrollHeight;
-    }
+    };
+
+    // Scroll immediately
+    scrollToBottom();
+
+    // Scroll after content updates (multiple attempts to handle dynamic content)
+    const timeouts = [50, 150, 300].map(delay => 
+      setTimeout(scrollToBottom, delay)
+    );
+
+    // Cleanup timeouts
+    return () => timeouts.forEach(timeout => clearTimeout(timeout));
   }, [items]);
 
   /**
@@ -247,34 +258,17 @@ export function ConsolePage() {
    */
   return (
     <div data-component="ConsolePage">
-      <div className="content-main">
+      <div className="content-main mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         <div className="content-logs">
           <div className="content-block conversation">
-            <div className="content-block-body" data-conversation-content>
+            <div 
+              className="content-block-body overflow-y-auto max-h-[calc(100vh-200px)]" 
+              data-conversation-content
+            >
               {!items.length && (
-                <div className="empty-state" style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  height: '80vh'
-                }}>
-                  <h2 style={{
-                    fontSize: '3rem',
-                    fontWeight: 600,
-                    marginBottom: '1.5rem',
-                    textAlign: 'center'
-                  }}>
-                    Karibu kwa Rafiki
-                  </h2>
-                  <p style={{
-                    color: '#6b7280',
-                    marginBottom: '2.5rem',
-                    fontSize: '1.5rem',
-                    textAlign: 'center'
-                  }}>
-                    Msaidizi wako wa AI
-                  </p>
+                <div className="empty-state">
+                  <h2>Karibu kwa Rafiki</h2>
+                  <p>Msaidizi wako wa AI</p>
                 </div>
               )}
               {items.map((conversationItem, i) => {
