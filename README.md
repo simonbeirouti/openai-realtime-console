@@ -2,6 +2,12 @@
 
 Rafiki OS is a voice-first operating system built on top of the OpenAI Realtime API. This will enable those in Kenya to interact with their devices and services using voice.
 
+![Landing Page](public/landing.png)
+
+![Chat Conversation](public/chat.png)
+
+You can watch the demo video [here](public/video.mp4).
+
 # ToDos
 - [x] Show chat conversation
 - [ ] Upload images
