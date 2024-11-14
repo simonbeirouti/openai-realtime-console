@@ -108,8 +108,7 @@ export function ConsolePage() {
     client.sendUserMessageContent([
       {
         type: `input_text`,
-        text: `Hello! Welcome to Rafiki OS.`,
-        
+        text: `Jambo! Karibu kwenye Rafiki OS.`,
       },
     ]);
 
