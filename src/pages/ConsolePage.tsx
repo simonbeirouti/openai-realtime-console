@@ -318,7 +318,7 @@ export function ConsolePage() {
               })}
             </div>
           </div>
-          <div className="fixed bottom-0 left-0 right-0 p-8 bg-[var(--background)] border-t border-[var(--border)] flex justify-center">
+          <div className="fixed bottom-0 left-0 right-0 p-8 bg-[var(--background)] flex justify-center">
             {!isConnected ? (
               <Button
                 className="w-full max-w-[28rem] mx-auto flex items-center justify-center gap-2 py-6 text-2xl"
