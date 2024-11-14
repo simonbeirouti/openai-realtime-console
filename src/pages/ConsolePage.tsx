@@ -19,9 +19,7 @@ import { WavRecorder, WavStreamPlayer } from '../lib/wavtools/index.js';
 import { instructions } from '../utils/conversation_config.js';
 
 import { X, Zap } from 'react-feather';
-import { Button } from '../components/button/Button';
-
-import './ConsolePage.scss';
+import { Button } from 'src/components/ui/button';
 
 /**
  * Type for all event logs
@@ -257,24 +255,33 @@ export function ConsolePage() {
    * Render the application
    */
   return (
-    <div data-component="ConsolePage">
-      <div className="content-main mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-        <div className="content-logs">
-          <div className="content-block conversation">
+    <div className="h-full flex flex-col overflow-hidden mx-2 font-mono text-base font-normal">
+      <div className="h-full flex-grow flex-shrink overflow-hidden mx-4 mb-20">
+        <div className="flex-grow flex flex-col overflow-hidden h-[calc(100vh-120px)]">
+          <div className="flex-grow">
             <div 
-              className="content-block-body overflow-y-auto max-h-[calc(100vh-200px)]" 
+              className="flex-1 overflow-y-auto p-6 min-h-0 max-h-[calc(100vh-200px)] scrollbar-thin scrollbar-track-transparent scrollbar-thumb-black/20 scrollbar-thumb-rounded"
               data-conversation-content
             >
               {!items.length && (
-                <div className="empty-state">
-                  <h2>Karibu kwa Rafiki</h2>
-                  <p>Msaidizi wako wa AI</p>
+                <div className="flex flex-col justify-center items-center h-[80vh] text-center p-8 bg-white">
+                  <h2 className="text-5xl font-semibold mb-6 text-center">
+                    Karibu kwa Rafiki
+                  </h2>
+                  <p className="text-gray-500 mb-10 text-2xl text-center">
+                    Msaidizi wako wa AI
+                  </p>
                 </div>
               )}
               {items.map((conversationItem, i) => {
                 return (
-                  <div className="conversation-item" key={conversationItem.id}>
-                    <div className={`speaker ${conversationItem.role || ''}`}>
+                  <div 
+                    className="flex flex-col gap-2 mb-6 p-4 my-2 rounded-lg bg-white/5"
+                    key={conversationItem.id}
+                  >
+                    <div className={`text-lg pl-2 ${
+                      conversationItem.role === 'user' ? 'text-[#0099ff]' : 'text-[#009900]'
+                    }`}>
                       <div>
                         {(conversationItem.role || conversationItem.type).replaceAll(
                           '_',
@@ -282,7 +289,11 @@ export function ConsolePage() {
                         )}
                       </div>
                     </div>
-                    <div className={`speaker-content`}>
+                    <div className={`flex-grow text-zinc-900 p-5 rounded-xl text-lg leading-relaxed max-w-[90%] ${
+                      conversationItem.role === 'user' 
+                        ? 'ml-auto bg-[#e8f5ff]' 
+                        : 'mr-auto bg-[#f0fff4]'
+                    }`}>
                       {!conversationItem.formatted.tool &&
                         conversationItem.role === 'user' && (
                           <div>
@@ -292,7 +303,7 @@ export function ConsolePage() {
                                 : conversationItem.formatted.text ||
                                   '(item sent)')}
                           </div>
-                        )}
+                      )}
                       {!conversationItem.formatted.tool &&
                         conversationItem.role === 'assistant' && (
                           <div>
@@ -300,49 +311,35 @@ export function ConsolePage() {
                               conversationItem.formatted.text ||
                               '(truncated)'}
                           </div>
-                        )}
+                      )}
                     </div>
                   </div>
                 );
               })}
             </div>
           </div>
-          <div className="content-actions">
+          <div className="fixed bottom-0 left-0 right-0 p-8 bg-[var(--background)] border-t border-[var(--border)] flex justify-center">
             {!isConnected ? (
               <Button
-                label="Ongea na Rafiki"
-                icon={Zap}
-                buttonStyle="action"
+                className="w-full max-w-[28rem] mx-auto flex items-center justify-center gap-2 py-6 text-2xl"
                 onClick={() => {
                   connectConversation();
                   changeTurnEndType('server_vad');
                 }}
-                style={{
-                  width: '100%',
-                  maxWidth: '28rem',
-                  margin: '0 auto',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: '0.5rem'
-                }}
-              />
+                variant="default"
+              >
+                <Zap className="h-6 w-6" />
+                Ongea na Rafiki
+              </Button>
             ) : (
               <Button
-                label="Maliza Mazungumzo"
-                icon={X}
-                buttonStyle="regular"
+                className="w-full max-w-[28rem] mx-auto flex items-center justify-center gap-2 py-6 text-2xl"
                 onClick={disconnectConversation}
-                style={{
-                  width: '100%',
-                  maxWidth: '28rem',
-                  margin: '0 auto',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  gap: '0.5rem'
-                }}
-              />
+                variant="outline"
+              >
+                <X className="h-6 w-6" />
+                Maliza Mazungumzo
+              </Button>
             )}
           </div>
         </div>
